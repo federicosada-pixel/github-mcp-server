@@ -22,10 +22,10 @@ Build a coherent identity and its requested applications. Treat supplied brand f
    ```
 
 2. Read [prerequisites](references/prerequisites.md). Check tools before the stage that needs them. Never install system packages without the user's permission.
-3. If `higgsfield` is missing, install it only after permission:
+3. If `higgsfield` is missing, install the pinned release only after permission (its postinstall verifies the binary checksum):
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/higgsfield-ai/cli/main/install.sh | sh
+   npm i -g @higgsfield/cli@1.1.26
    ```
 
 4. If `higgsfield account status` fails with an authentication or workspace error, ask the user to run `higgsfield auth login` or select a workspace, then wait.

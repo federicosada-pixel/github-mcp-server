@@ -59,10 +59,10 @@ higgsfield account status
 higgsfield workspace status
 ```
 
-If the CLI is missing, ask permission before installing:
+If the CLI is missing, ask permission before installing the pinned release (its postinstall verifies the binary checksum):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/higgsfield-ai/cli/main/install.sh | sh
+npm i -g @higgsfield/cli@1.1.26
 ```
 
 Authentication requires an interactive user login:

@@ -83,7 +83,7 @@ slow head sway, tail/appendage micro-wave, wing micro-adjust.
 Never block on Meshy refine (texture) — rig/weights/clips run on the gray
 preview mesh; when the textured mesh arrives, re-run the same three scripts
 on it (bbox-relative skeleton makes this deterministic). See stuck-refine
-recovery in `meshy-api.md`.
+recovery in `game-meshy-api.md`.
 
 ## Tripo3D alternative (UNVERIFIED — needs API key)
 

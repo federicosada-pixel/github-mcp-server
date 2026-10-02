@@ -5,7 +5,7 @@
 > key-pose image → `higgsfield generate create` (**`seedance1_5`**) → frame extraction
 > (ffmpeg) → frame selection → per-frame background removal → spritesheet
 > assembly. Style: the key-pose prompt embeds the STYLE FORMULA per
-> `stylization.md` — open it first, as for every asset.
+> `game-stylization.md` — open it first, as for every asset.
 
 Why video instead of generating frames directly: an image model drawing N
 frames independently cannot hold the character identical across frames —
@@ -46,7 +46,7 @@ the project requires explicit control over extracted frames.
 
 | # | Stage | Tool | Output |
 |---|---|---|---|
-| 1 | Source image | manifest / user / `stylization.md` pipeline | character or object image |
+| 1 | Source image | manifest / user / `game-stylization.md` pipeline | character or object image |
 | 2 | Key-pose image | `higgsfield generate create` → `flux_2` | full-body pose at the action's mid/peak phase |
 | 3 | Animation video | `higgsfield generate create` → **`seedance1_5`** | 4 s, 720p, AR = key-pose ratio (explicit); loop: start = end frame |
 | 4 | Raw frames | ffmpeg | every frame of the video as PNG |
@@ -76,7 +76,7 @@ Hard rules (each one is a known failure when violated):
 ## Stage 1 — Source image
 
 What goes in: the character/asset image from the manifest (generated per
-`stylization.md`, FORMULA embedded) or supplied by the user. Character,
+`game-stylization.md`, FORMULA embedded) or supplied by the user. Character,
 object, or both in one shot — the pipeline does not care what the subject is,
 only that it is fully visible.
 
@@ -110,7 +110,7 @@ instruction. The prompt MUST demand:
   and a busy background degrades the matte. **The background color must NOT
   appear anywhere on the subject** — pick it by looking at the subject's
   palette first (green character → magenta background, red/pink character →
-  green, neutral subject → any saturated key color per `stylization.md`).
+  green, neutral subject → any saturated key color per `game-stylization.md`).
   A shared color is how the remover eats holes into the subject or leaves
   background patches stuck to it.
 

@@ -6,9 +6,9 @@
 > pipeline, and the procedural branch for non-humanoid creatures. **Mandatory for
 > every 3D asset — creating a model or animating it; never model or animate 3D
 > without this reference.** Static-only meshes follow the same image→3D steps
-> (`meshy-api.md`) and stop before the rigging step.
+> (`game-meshy-api.md`) and stop before the rigging step.
 > Style: concept/reference images for 3D follow the
-> 3D rules in `stylization.md` §8 (white background, three-quarter
+> 3D rules in `game-stylization.md` §8 (white background, three-quarter
 > isometric view, formula in the concept prompt, token in `texture_prompt`).
 
 > **Use the native CLI path first.** `higgsfield generate create` covers image→3D→rig→animation
@@ -17,7 +17,7 @@
 > via model `3d_rigging` on the result GLB, clip ids via
 > `higgsfield preset list animation-action`. Billed in workspace credits — **no
 > external API key exists or is needed; never ask the user for one.** The raw
-> provider API (`meshy-api.md`) is a fallback ONLY when no native 3D
+> provider API (`game-meshy-api.md`) is a fallback ONLY when no native 3D
 > tool is available in the environment.
 
 `sam_3_3d` only makes STATIC meshes. When the user
@@ -33,8 +33,8 @@ smoke-test on a small asset before a long batch run.
 | Stylized game character, fast, zero manual steps | CC0 packs (KayKit/Quaternius) → convert → done |
 | CUSTOM character from text/image, zero manual steps, free | 2D→3D rig-transfer pipeline (Step 4 below) — fully local, but skinning quality is rough on image-to-3D meshes; user rejected it for production. Prefer the native 3D tool |
 | Custom-look humanoid, best skinning quality | Generate T-pose ref → user runs Mixamo manually (no API!) → user gives FBX → convert here |
-| Fully automated 2D→animated GLB, best quality, paid | **Native 3D path — preferred**: inspect `image_to_3d`, select an action with `higgsfield preset list animation-action`, then create with texture, rigging, animation, A-pose, and the chosen integer action ID. Extra clips use `3d_rigging` on the result GLB, then merge locally. **Before any submit read `meshy-input-rules.md`.** Workspace credits only; no provider key. Raw API is fallback only. |
-| Non-humanoid CREATURE (dragon, quadruped, snake, spider, fish) | The auto-rig is humanoid-only (non-bipeds rig poorly or fail). Options: (a) Tripo3D API — rig types quadruped/hexapod/octopod/avian/serpentine/aquatic + locomotion presets (needs Tripo key, unverified); (b) **Procedural branch — VERIFIED on a dragon**: build skeleton+weights+sine-based clips in headless Blender, `procedural-animation.md` + `scripts/proc_rig_dragon.py`/`proc_weights.py`/`proc_anim_dragon.py` |
+| Fully automated 2D→animated GLB, best quality, paid | **Native 3D path — preferred**: inspect `image_to_3d`, select an action with `higgsfield preset list animation-action`, then create with texture, rigging, animation, A-pose, and the chosen integer action ID. Extra clips use `3d_rigging` on the result GLB, then merge locally. **Before any submit read `game-meshy-input-rules.md`.** Workspace credits only; no provider key. Raw API is fallback only. |
+| Non-humanoid CREATURE (dragon, quadruped, snake, spider, fish) | The auto-rig is humanoid-only (non-bipeds rig poorly or fail). Options: (a) Tripo3D API — rig types quadruped/hexapod/octopod/avian/serpentine/aquatic + locomotion presets (needs Tripo key, unverified); (b) **Procedural branch — VERIFIED on a dragon**: build skeleton+weights+sine-based clips in headless Blender, `game-procedural-animation.md` + `scripts/proc_rig_dragon.py`/`proc_weights.py`/`proc_anim_dragon.py` |
 | Non-rigged props (doors, drones, slimes, turrets) | Procedural animation in Three.js code — no rig needed |
 
 **Mixamo has NO official API.** Internal REST API exists but auto-rig marker
@@ -228,6 +228,6 @@ white canvas screenshot.
 - `scripts/proc_rig_dragon.py` — procedural skeleton from bbox analysis (non-humanoids).
 - `scripts/proc_weights.py` — distance-based skin weights (ARMATURE_AUTO is broken headless).
 - `scripts/proc_anim_dragon.py` — sine-based idle/fly clips baked to keyframes.
-- `meshy-api.md` — verified Meshy API pipeline: image→3D→rig→animations, endpoints, action_id catalog, stuck-refine recovery, costs.
-- `meshy-input-rules.md` — MANDATORY pre-submit rules: input-image validation (character sheets MUST be cropped to one figure or split into multi-image views; pose_mode), low-poly paths (`model_type: lowpoly` vs `target_polycount`), polycount budgets per asset class, payload templates. Read BEFORE building any Meshy request.
-- `procedural-animation.md` — non-humanoid branch: skeleton/weights/clip recipes per creature type, vision-QC loop, phase-sampling pitfall.
+- `game-meshy-api.md` — verified Meshy API pipeline: image→3D→rig→animations, endpoints, action_id catalog, stuck-refine recovery, costs.
+- `game-meshy-input-rules.md` — MANDATORY pre-submit rules: input-image validation (character sheets MUST be cropped to one figure or split into multi-image views; pose_mode), low-poly paths (`model_type: lowpoly` vs `target_polycount`), polycount budgets per asset class, payload templates. Read BEFORE building any Meshy request.
+- `game-procedural-animation.md` — non-humanoid branch: skeleton/weights/clip recipes per creature type, vision-QC loop, phase-sampling pitfall.

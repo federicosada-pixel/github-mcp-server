@@ -5,7 +5,7 @@
 > The pipeline may be entered at any phase (only the seam fix, or only maps from an
 > existing tile). Generate through `higgsfield generate create`; local image paths are
 > uploaded automatically. Embed the game's STYLE FORMULA
-> (see `stylization.md`) in every generation prompt.
+> (see `game-stylization.md`) in every generation prompt.
 >
 > **The post-process scripts live on disk** in this skill's `scripts/`
 > folder. Locate them once per run (see **Locating the scripts** below) and

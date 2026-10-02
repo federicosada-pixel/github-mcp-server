@@ -13,7 +13,7 @@
 Verified end-to-end 2026-06-10 (image → 3D → rig → 4 clips → merged GLB).
 Endpoint shapes re-checked against docs.meshy.ai 2026-06-11.
 
-**Before building ANY request, read `meshy-input-rules.md`** (single-figure
+**Before building ANY request, read `game-meshy-input-rules.md`** (single-figure
 rule, cropping, low-poly params). Skipping it wastes credits.
 
 ## Basics
@@ -65,7 +65,7 @@ Cost observed: **~85 credits for a full character** (image-to-3d + rig +
   task finishes faster.
 - `multi_view_thumbnails: true` — 4 cardinal-view PNGs for vision QC without
   downloading the GLB (~3 s extra latency).
-- Low-poly rules and polycount budgets: see `meshy-input-rules.md`.
+- Low-poly rules and polycount budgets: see `game-meshy-input-rules.md`.
 - Multi-image variant: `POST /openapi/v1/multi-image-to-3d` (1–4 views,
   same pose on every view — see input rules).
 
@@ -100,7 +100,7 @@ Recovery recipe:
   GLB/FBX **for free**, no separate animation tasks needed for those two.
 - **Humanoid only.** Docs: "not suitable for non-humanoid assets". A
   quadruped/creature returns `422 — Pose estimation failed`. Branch to
-  Tripo3D or the procedural pipeline (`procedural-animation.md`).
+  Tripo3D or the procedural pipeline (`game-procedural-animation.md`).
   Nuance: Meshy's **web app** offers a 4-legs (quadruped) rig option, but the
   public **API** endpoint is humanoid-only — don't promise API quadruped
   support; suggest the web UI as a manual fallback for quadrupeds.

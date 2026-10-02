@@ -39,10 +39,10 @@ Never use the monolithic `video_explainer` job in this skill.
 
 ## Bootstrap
 
-1. If `higgsfield` is unavailable, install it:
+1. If `higgsfield` is unavailable, ask the user for permission, then install the pinned release (its postinstall verifies the binary checksum):
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/higgsfield-ai/cli/main/install.sh | sh
+   npm i -g @higgsfield/cli@1.1.26
    ```
 
 2. If `higgsfield account status` fails, ask the user to run `higgsfield auth login`, then wait.

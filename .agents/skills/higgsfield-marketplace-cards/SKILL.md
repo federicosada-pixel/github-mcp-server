@@ -23,7 +23,7 @@ The CLI first calls the backend enhancer, where marketplace rules and templates 
 
 ## Bootstrap
 
-1. If `higgsfield` is not on `$PATH`, install it by running the official installer with Bash: `curl -fsSL https://raw.githubusercontent.com/higgsfield-ai/cli/main/install.sh | sh`.
+1. If `higgsfield` is not on `$PATH`, ask the user for permission, then install the pinned release (its postinstall verifies the binary checksum): `npm i -g @higgsfield/cli@1.1.26`.
 2. If `higgsfield account status` fails with authentication errors, ask the user to run `higgsfield auth login`.
 
 ## UX Rules

@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import html
+import http.client
 import ipaddress
 import json
 import os
@@ -55,6 +56,28 @@ STYLE_PAINT_RE = re.compile(
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         return None
+
+
+class PublicHTTPSConnection(http.client.HTTPSConnection):
+    """Connect to the address that passed the public-host check, so DNS cannot rebind between check and use."""
+
+    def connect(self) -> None:
+        if self._tunnel_host:
+            # Behind a proxy the proxy resolves the target; the caller's pre-check still applies.
+            super().connect()
+            return
+        address = resolve_public_address(self.host)
+        sock = socket.create_connection((address, self.port), self.timeout, self.source_address)
+        self.sock = self._context.wrap_socket(sock, server_hostname=self.host)
+
+
+class PublicHTTPSHandler(HTTPSHandler):
+    def https_open(self, req):
+        return self.do_open(PublicHTTPSConnection, req, context=self._context)
+
+
+def public_https_opener():
+    return build_opener(NoRedirect, PublicHTTPSHandler(context=tls_context()))
 
 
 def tls_context() -> ssl.SSLContext:
@@ -257,8 +280,9 @@ def normalize_slot(value: dict[str, Any], slot: str) -> dict[str, Any]:
         if "variants" in value:
             variants = require_object(value, "variants")
             result["variants"] = {
-                "black": normalize_asset(variants.get("black")),
-                "white": normalize_asset(variants.get("white")),
+                key: normalize_asset(variants[key])
+                for key in ("black", "white")
+                if variants.get(key) is not None
             }
         return result
     if slot == "palette":
@@ -576,22 +600,27 @@ def run_state(args: argparse.Namespace) -> dict[str, Any]:
     return {**result, "state_snapshot": state}
 
 
-def assert_public_host(hostname: str) -> None:
+def resolve_public_address(hostname: str) -> str:
     try:
         answers = socket.getaddrinfo(hostname, None)
     except socket.gaierror as error:
         raise RuntimeError(f"cannot resolve SVG host '{hostname}'") from error
-    addresses = {answer[4][0] for answer in answers}
+    addresses = [answer[4][0] for answer in answers]
     if not addresses:
         raise RuntimeError(f"cannot resolve SVG host '{hostname}'")
     for address in addresses:
         ip = ipaddress.ip_address(address.split("%", 1)[0])
         if not ip.is_global:
             raise RuntimeError(f"SVG host resolves to a non-public address: {address}")
+    return addresses[0]
+
+
+def assert_public_host(hostname: str) -> None:
+    resolve_public_address(hostname)
 
 
 def safe_fetch_svg(url: str) -> str:
-    opener = build_opener(NoRedirect, HTTPSHandler(context=tls_context()))
+    opener = public_https_opener()
     current = url
     for _ in range(MAX_REDIRECTS + 1):
         parsed = urlparse(current)

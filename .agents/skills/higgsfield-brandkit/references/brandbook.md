@@ -13,7 +13,7 @@ python3 "$SKILL_ROOT/scripts/brandkit.py" state \
 
 Require:
 
-- approved logo SVG
+- approved logo SVG, saved with a public https `url` or a readable local `path` (an asset `id` alone cannot be embedded)
 - approved palette
 - approved display/body typography
 - approved brand concept/summary copy supplied by the user

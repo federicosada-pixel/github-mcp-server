@@ -20,10 +20,10 @@ import subprocess
 import tempfile
 from typing import Any, Callable
 from urllib.parse import quote, urljoin, urlparse
-from urllib.request import HTTPRedirectHandler, HTTPSHandler, Request, build_opener
+from urllib.request import Request
 import zipfile
 
-from brandkit import assert_public_host, normalize_hex, read_state, slug, tls_context
+from brandkit import assert_public_host, normalize_hex, public_https_opener, read_state, slug
 
 
 TEMPLATE_URL = (
@@ -50,13 +50,8 @@ REQUIRED_SHAPES = (
 Archive = dict[str, bytes]
 
 
-class NoRedirect(HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        return None
-
-
 def fetch_bytes(url: str, limit: int, redirects: int = 2) -> bytes:
-    opener = build_opener(NoRedirect, HTTPSHandler(context=tls_context()))
+    opener = public_https_opener()
     current = url
     for _ in range(redirects + 1):
         parsed = urlparse(current)
@@ -801,7 +796,9 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
     asset = logo.get("asset", {})
     logo_source = str(asset.get("url") or asset.get("path") or "").strip()
     if not logo_source:
-        raise RuntimeError("approved logo requires a public URL or readable local path")
+        raise RuntimeError(
+            "approved logo has only an asset id; re-approve the logo with a public https url or readable local path before building the Brandbook"
+        )
     entries["ppt/media/image6.png"] = convert_png(
         source_bytes(logo_source, MAX_ASSET_BYTES), 2000, 2000, "contain"
     )
