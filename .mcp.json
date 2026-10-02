@@ -2,7 +2,7 @@
   "mcpServers": {
     "jev": {
       "command": "npx",
-      "args": ["-y", "@jkudish/jev-mcp"],
+      "args": ["-y", "@jkudish/jev-mcp@0.13.0"],
       "env": {
         "TYPESAFE_API_KEY": "${TYPESAFE_API_KEY}"
       }
