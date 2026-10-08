@@ -8,14 +8,19 @@ const PANE = 'savvy-progress'
 const subagents = atom({ plugin: 'savvy-progress', key: 'subagents' } as const, [])
 const isOpen = atom({ plugin: 'savvy-progress', key: 'isOpen' } as const, false)
 
-// Rough, built-in estimate only: dollars per million tokens. Not your actual bill.
-const PRICE_TABLE: ReadonlyArray<{ match: string; input: number; output: number }> = [
-  { match: 'opus', input: 15, output: 75 },
-  { match: 'sonnet', input: 3, output: 15 },
-  { match: 'haiku', input: 0.8, output: 4 },
-  { match: 'fable', input: 1, output: 5 },
+// Published list prices in dollars per million tokens (docs.claude.com pricing). Not your actual bill.
+// Haiku 5.5 is priced at its rate for prompts up to 100k tokens. First match wins.
+const PRICE_TABLE: ReadonlyArray<{ match: string; input: number; output: number; cacheRead: number }> = [
+  { match: 'fable', input: 10, output: 50, cacheRead: 0.25 },
+  { match: 'opus-5', input: 4, output: 20, cacheRead: 0.2 },
+  { match: 'sonnet-5', input: 2, output: 10, cacheRead: 0.1 },
+  { match: 'haiku-5', input: 0.1, output: 0.5, cacheRead: 0.01 },
+  { match: 'opus', input: 5, output: 25, cacheRead: 0.5 },
+  { match: 'sonnet', input: 3, output: 15, cacheRead: 0.3 },
+  { match: 'haiku', input: 1, output: 5, cacheRead: 0.1 },
 ]
-const DEFAULT_PRICE = { input: 3, output: 15 }
+const DEFAULT_PRICE = { input: 2, output: 10, cacheRead: 0.1 }
+const CACHE_WRITE_MULTIPLIER = 1.25
 
 const priceFor = (model: string) => {
   const lower = model.toLowerCase()
@@ -28,8 +33,8 @@ const estimateCost = (agent: SubagentInfo) => {
   const fresh = Math.max(0, agent.inputTokens - agent.cacheReadTokens - agent.cacheCreationTokens)
   const dollars =
     (fresh * price.input +
-      agent.cacheReadTokens * price.input * 0.1 +
-      agent.cacheCreationTokens * price.input * 1.25 +
+      agent.cacheReadTokens * price.cacheRead +
+      agent.cacheCreationTokens * price.input * CACHE_WRITE_MULTIPLIER +
       agent.outputTokens * price.output) /
     1_000_000
 

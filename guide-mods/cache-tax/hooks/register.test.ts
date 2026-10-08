@@ -85,7 +85,8 @@ test('a prompt sent after the cache went cold is held once with a cost estimate'
 
   expect(first.drop).toContain('went cold 1h 30m ago')
   expect(first.drop).toContain('100,000 tokens')
-  expect(first.drop).toContain('$3.00')
+  expect(first.drop).toContain('~$0.80')
+  expect(first.drop).toContain('~$0.02')
 
   const second = await $.prompt.submit(SUBMIT)
 
