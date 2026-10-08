@@ -24,8 +24,35 @@ test('tracks files and pages, and /ring lists them', async ($, on) => {
   const { text } = await $.command.run(RING)
 
   expect(text).toBe(
-    ['file  a.md', 'file  b.ts', 'page  https://example.com'].join('\n'),
+    ['page  https://example.com', 'file  b.ts', 'file  a.md'].join('\n'),
   )
+})
+
+test('a file touched again is listed once, with a count, at the top', async ($, on) => {
+  mock.clock(on)
+  on('tool.call', ($, e) => ({ result: {}, text: '' }))
+
+  await $.tool.call({ tool: 'Read', file_path: 'a.md' })
+  await $.tool.call({ tool: 'Read', file_path: 'b.ts' })
+  await $.tool.call({ tool: 'Edit', file_path: 'a.md', old_string: 'x', new_string: 'y' })
+  await $.tool.call({ tool: 'Write', file_path: 'a.md', content: 'z' })
+
+  const { text } = await $.command.run(RING)
+
+  expect(text).toBe(['file  a.md  ×3', 'file  b.ts'].join('\n'))
+})
+
+test('Claude Code config, mod folders and tsconfig helpers are not tracked', async ($, on) => {
+  mock.clock(on)
+  on('tool.call', ($, e) => ({ result: {}, text: '' }))
+
+  await $.tool.call({ tool: 'Read', file_path: '/root/.claude/dev-mods/x/hooks/register.tsx' })
+  await $.tool.call({ tool: 'Write', file_path: '/tmp/scratch/tsconfig.my-mod.json', content: '{}' })
+  await $.tool.call({ tool: 'Read', file_path: '/work/src/app.ts' })
+
+  const { text } = await $.command.run(RING)
+
+  expect(text).toBe('file  /work/src/app.ts')
 })
 
 const abovePromptProps = (hasSurvey: boolean) => ({
