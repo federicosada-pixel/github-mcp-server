@@ -1,0 +1,6 @@
+{
+  "name": "retheme",
+  "version": "0.1.0",
+  "description": "/skin <theme> restyles tool rows and Edit diff cards, live, across several themes",
+  "types": "./types/index.d.ts"
+}

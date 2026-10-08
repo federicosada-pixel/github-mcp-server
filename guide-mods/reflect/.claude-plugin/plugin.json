@@ -1,0 +1,6 @@
+{
+  "name": "reflect",
+  "version": "0.1.0",
+  "description": "Turns your corrections into saved CLAUDE.md rules: a band offers Save, Global, Edit or Skip",
+  "types": "./types/index.d.ts"
+}

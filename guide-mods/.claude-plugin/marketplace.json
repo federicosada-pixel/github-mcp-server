@@ -1,0 +1,14 @@
+{
+  "name": "guide-mods",
+  "owner": { "name": "you" },
+  "description": "Seven Claude Code mods rebuilt from the 9 Claude Mods guide",
+  "plugins": [
+    { "name": "file-tracker", "source": "./file-tracker" },
+    { "name": "reflect", "source": "./reflect" },
+    { "name": "replay-theater", "source": "./replay-theater" },
+    { "name": "blast-radius", "source": "./blast-radius" },
+    { "name": "savvy-progress", "source": "./savvy-progress" },
+    { "name": "retheme", "source": "./retheme" },
+    { "name": "cache-tax", "source": "./cache-tax" }
+  ]
+}

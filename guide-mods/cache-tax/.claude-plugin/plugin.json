@@ -1,0 +1,6 @@
+{
+  "name": "cache-tax",
+  "version": "0.1.0",
+  "description": "Holds your next message once when the prompt cache has gone cold and shows what re-sending would cost; /keepwarm keeps it warm",
+  "types": "./types/index.d.ts"
+}

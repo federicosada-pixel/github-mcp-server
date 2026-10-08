@@ -1,0 +1,5 @@
+{
+  "name": "cache-tax-marketplace",
+  "owner": { "name": "you" },
+  "plugins": [{ "name": "cache-tax", "source": "./" }]
+}

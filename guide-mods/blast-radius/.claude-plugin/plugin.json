@@ -1,0 +1,6 @@
+{
+  "name": "blast-radius",
+  "version": "0.1.0",
+  "description": "Holds risky rm -rf / git clean commands and shows exactly what they would delete, with Proceed/Cancel",
+  "types": "./types/index.d.ts"
+}

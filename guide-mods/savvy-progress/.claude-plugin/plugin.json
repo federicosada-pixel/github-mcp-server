@@ -1,0 +1,6 @@
+{
+  "name": "savvy-progress",
+  "version": "0.1.0",
+  "description": "A live panel of every subagent Claude spawns: model, progress, and a rough running cost estimate",
+  "types": "./types/index.d.ts"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "retheme-marketplace",
+  "owner": { "name": "you" },
+  "plugins": [{ "name": "retheme", "source": "./" }]
+}
