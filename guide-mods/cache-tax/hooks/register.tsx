@@ -12,20 +12,28 @@ const model = atom({ plugin: 'cache-tax', key: 'model' } as const, '')
 const warnedFor = atom({ plugin: 'cache-tax', key: 'warnedFor' } as const, null)
 const keepwarmUntil = atom({ plugin: 'cache-tax', key: 'keepwarmUntil' } as const, null)
 
-// Rough, built-in estimate: dollars per million input tokens. Not your actual bill.
-const INPUT_PRICE: ReadonlyArray<{ match: string; perMillion: number }> = [
-  { match: 'opus', perMillion: 15 },
-  { match: 'sonnet', perMillion: 3 },
-  { match: 'haiku', perMillion: 0.8 },
-  { match: 'fable', perMillion: 1 },
+// Published list prices in dollars per million tokens (docs.claude.com pricing). Not your actual bill.
+// Haiku 5.5 is priced at its rate for prompts up to 100k tokens. First match wins.
+const PRICE_TABLE: ReadonlyArray<{ match: string; input: number; cacheRead: number }> = [
+  { match: 'fable', input: 10, cacheRead: 0.25 },
+  { match: 'opus-5', input: 4, cacheRead: 0.2 },
+  { match: 'sonnet-5', input: 2, cacheRead: 0.1 },
+  { match: 'haiku-5', input: 0.1, cacheRead: 0.01 },
+  { match: 'opus', input: 5, cacheRead: 0.5 },
+  { match: 'sonnet', input: 3, cacheRead: 0.3 },
+  { match: 'haiku', input: 1, cacheRead: 0.1 },
 ]
+const DEFAULT_PRICE = { input: 2, cacheRead: 0.1 }
+// A cold cache is re-written as a 1-hour entry, which costs 2x the input price.
 const CACHE_WRITE_MULTIPLIER = 2
-const CACHE_READ_MULTIPLIER = 0.1
 
 let pinger: Timer | undefined
 
-const inputPrice = (name: string) =>
-  INPUT_PRICE.find(row => name.toLowerCase().includes(row.match))?.perMillion ?? 3
+const priceFor = (name: string) => {
+  const lower = name.toLowerCase()
+
+  return PRICE_TABLE.find(row => lower.includes(row.match)) ?? DEFAULT_PRICE
+}
 
 const formatAge = (ms: number) => {
   const minutes = Math.floor(ms / MINUTE)
@@ -138,9 +146,9 @@ export const register: Register = on => {
 
     await update($, warnedFor, () => last)
 
-    const price = inputPrice(await read($, model))
-    const cold = (tokens * price * CACHE_WRITE_MULTIPLIER) / 1_000_000
-    const warm = (tokens * price * CACHE_READ_MULTIPLIER) / 1_000_000
+    const price = priceFor(await read($, model))
+    const cold = (tokens * price.input * CACHE_WRITE_MULTIPLIER) / 1_000_000
+    const warm = (tokens * price.cacheRead) / 1_000_000
 
     return {
       drop:
