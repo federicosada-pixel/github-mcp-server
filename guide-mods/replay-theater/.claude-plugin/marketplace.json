@@ -1,0 +1,5 @@
+{
+  "name": "replay-theater-marketplace",
+  "owner": { "name": "you" },
+  "plugins": [{ "name": "replay-theater", "source": "./" }]
+}

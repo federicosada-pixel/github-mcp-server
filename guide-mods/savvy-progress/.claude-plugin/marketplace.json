@@ -1,0 +1,5 @@
+{
+  "name": "savvy-progress-marketplace",
+  "owner": { "name": "you" },
+  "plugins": [{ "name": "savvy-progress", "source": "./" }]
+}

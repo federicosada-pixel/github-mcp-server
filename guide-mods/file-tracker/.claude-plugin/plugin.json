@@ -1,0 +1,6 @@
+{
+  "name": "file-tracker",
+  "version": "0.1.0",
+  "description": "Tracks every file and page Claude touches this session, shown as a bubble above the prompt, with a /ring command to list them all",
+  "types": "./types/index.d.ts"
+}

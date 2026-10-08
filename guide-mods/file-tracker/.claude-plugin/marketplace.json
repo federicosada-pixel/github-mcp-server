@@ -1,0 +1,5 @@
+{
+  "name": "file-tracker-marketplace",
+  "owner": { "name": "you" },
+  "plugins": [{ "name": "file-tracker", "source": "./" }]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "reflect-marketplace",
+  "owner": { "name": "you" },
+  "plugins": [{ "name": "reflect", "source": "./" }]
+}
