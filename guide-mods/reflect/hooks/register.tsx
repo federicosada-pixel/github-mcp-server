@@ -51,7 +51,8 @@ const dismiss = async ($: EngineInterface) => {
 
 export const register: Register = on => {
   on('prompt.submit', async ($, e, next) => {
-    void classifyAndSuggest($, e.text)
+    // Awaited: work left running after the hook returns can be dropped before it reaches the band.
+    await classifyAndSuggest($, e.text)
 
     return next(e)
   }).catch(($, e, next) => next(e))
