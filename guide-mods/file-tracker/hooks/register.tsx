@@ -95,9 +95,12 @@ export const register: Register = on => {
     }
 
     const { Box, Button, Text } = $.ui.resolve(e)
+    // The band is one instance shared by every mod: stack this row above whatever is beneath.
+    const below = await next(e)
 
     return (
-      <Box>
+      <Box flexDirection="column">
+        <Box>
         <Text dimColor>
           {touched.length} touched &middot; last: {last.label}{' '}
         </Text>
@@ -110,6 +113,8 @@ export const register: Register = on => {
             $.ui.toast('file-tracker: hidden. Use /ring to see what was tracked.')
           }}
         />
+        </Box>
+        {below}
       </Box>
     )
   })

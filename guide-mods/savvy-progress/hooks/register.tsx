@@ -157,13 +157,16 @@ export const register: Register = on => {
     const running = list.filter(a => !a.isDone).length
     const totalCost = list.reduce((sum, a) => sum + estimateCost(a), 0)
     const { Box, Text } = $.ui.resolve(e)
+    // The band is one instance shared by every mod: stack this row above whatever is beneath.
+    const below = await next(e)
 
     return (
-      <Box>
+      <Box flexDirection="column">
         <Text dimColor>
           {running} running, {list.length - running} done &middot; ~${totalCost.toFixed(2)} so far
           &middot; /agents-info{' '}
         </Text>
+        {below}
       </Box>
     )
   })

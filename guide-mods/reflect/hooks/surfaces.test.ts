@@ -5,6 +5,14 @@ const RULE = 'Always use pnpm instead of npm in this repository.'
 
 const mockEngine = (on: On) => {
   const clock = mock.clock(on)
+  const files = new Map<string, string>()
+  on('fs.exists', ($, e) => ({ value: files.has(e.path) }))
+  on('fs.read', ($, e) => ({ value: files.get(e.path) ?? '' }))
+  on('fs.write', ($, e) => {
+    files.set(e.path, e.text)
+
+    return { value: undefined }
+  })
   on('prompt.submit', ($, e) => ({ text: e.text }))
   on('ui.render', () => ({ type: 'Box' as const, children: [] }))
   on('ui.toast', () => ({ value: undefined }))

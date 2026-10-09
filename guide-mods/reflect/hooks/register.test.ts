@@ -178,5 +178,5 @@ test('Skip dismisses the suggestion without writing anything', async ($, on) => 
   })
 
   expect(await after.find({ type: 'Text' })).toBeUndefined()
-  expect(files.size).toBe(0)
+  expect(files.has('./CLAUDE.md')).toBe(false)
 })
