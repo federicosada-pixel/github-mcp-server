@@ -63,14 +63,13 @@ export const register: Register = on => {
       return next(e)
     }
 
-    if (e.surface !== 'terminal' && e.surface !== 'desktop') {
-      return next(e)
-    }
-
+    // Every surface draws Box, Text and Button; only mobile lacks the Input the editor needs.
+    const canEdit = e.surface !== 'mobile'
     const editing = await read($, isEditing)
-    const { Box, Button, Input, Text } = $.ui.resolve(e)
+    const { Box, Button, Text } = $.ui.resolve(e)
 
-    if (editing) {
+    if (editing && e.surface !== 'mobile') {
+      const { Input } = $.ui.resolve(e)
       const current = await read($, draft)
 
       return (
@@ -122,15 +121,17 @@ export const register: Register = on => {
             await dismiss($)
           }}
         />
-        <Button
-          key="edit"
-          label="Edit"
-          hotkey="e"
-          onPress={async () => {
-            await update($, draft, () => rule.text)
-            await update($, isEditing, () => true)
-          }}
-        />
+        {canEdit && (
+          <Button
+            key="edit"
+            label="Edit"
+            hotkey="e"
+            onPress={async () => {
+              await update($, draft, () => rule.text)
+              await update($, isEditing, () => true)
+            }}
+          />
+        )}
         <Button key="skip" label="Skip" hotkey="k" onPress={() => dismiss($)} />
       </Box>
     )
