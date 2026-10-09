@@ -68,6 +68,8 @@ export const register: Register = on => {
     const canEdit = e.surface !== 'mobile'
     const editing = await read($, isEditing)
     const { Box, Button, Text } = $.ui.resolve(e)
+    // The band is one instance shared by every mod: stack this row above whatever is beneath.
+    const below = await next(e)
 
     if (editing && e.surface !== 'mobile') {
       const { Input } = $.ui.resolve(e)
@@ -87,12 +89,14 @@ export const register: Register = on => {
               await dismiss($)
             }}
           />
+          {below}
         </Box>
       )
     }
 
     return (
-      <Box>
+      <Box flexDirection="column">
+        <Box>
         <Text dimColor>reflect &middot; &quot;{rule.text}&quot; </Text>
         <Button
           key="save"
@@ -134,6 +138,8 @@ export const register: Register = on => {
           />
         )}
         <Button key="skip" label="Skip" hotkey="k" onPress={() => dismiss($)} />
+        </Box>
+        {below}
       </Box>
     )
   })

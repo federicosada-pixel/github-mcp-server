@@ -143,9 +143,12 @@ export const register: Register = on => {
 
     const edits = await read($, lastTurnEdits)
     const { Box, Button, Text } = $.ui.resolve(e)
+    // The band is one instance shared by every mod: stack this row above whatever is beneath.
+    const below = await next(e)
 
     return (
-      <Box>
+      <Box flexDirection="column">
+        <Box>
         <Text dimColor>
           replay &middot; {edits.length} file{edits.length === 1 ? '' : 's'} changed last
           turn{' '}
@@ -157,6 +160,8 @@ export const register: Register = on => {
           hotkey="d"
           onPress={() => update($, hasHint, () => false)}
         />
+        </Box>
+        {below}
       </Box>
     )
   })
