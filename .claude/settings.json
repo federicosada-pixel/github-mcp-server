@@ -1,0 +1,19 @@
+{
+  "enabledPlugins": {
+    "file-tracker@guide-mods": true,
+    "reflect@guide-mods": true,
+    "replay-theater@guide-mods": true,
+    "blast-radius@guide-mods": true,
+    "savvy-progress@guide-mods": true,
+    "retheme@guide-mods": true,
+    "cache-tax@guide-mods": true
+  },
+  "extraKnownMarketplaces": {
+    "guide-mods": {
+      "source": {
+        "source": "directory",
+        "path": "./guide-mods"
+      }
+    }
+  }
+}
