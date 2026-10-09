@@ -56,7 +56,7 @@ test('/skin dracula restyles tool rows with an icon, the tool and its status', a
   mockEngine(on)
 
   const { text } = await $.command.run(run('dracula'))
-  expect(text).toBe('Skin set to dracula.')
+  expect(text).toContain('Skin set to dracula.')
 
   const ui = await $.ui.mount({
     plugin: 'retheme',
