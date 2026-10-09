@@ -9,7 +9,7 @@ Seven Claude Code mods, rebuilt from the "9 Claude Mods you need to try" guide.
 | `replay-theater` | After a turn, `/replay` steps through each file edit as a diff |
 | `blast-radius` | Holds `rm -rf` / `git clean -f` and lists exactly what would be deleted, with Proceed / Cancel |
 | `savvy-progress` | Live view of every subagent: model, tool calls, context size, estimated cost (`/agents-info`) |
-| `retheme` | `/skin noir \| tokyo-night \| dracula \| catppuccin \| off` restyles tool rows and Edit diff cards |
+| `retheme` | `/skin noir \| tokyo-night \| dracula \| catppuccin \| off` restyles tool rows and Edit diff cards (terminal sessions only: the Claude apps draw tool rows themselves) |
 | `cache-tax` | Holds a message once when the prompt cache went cold and shows the cost; `/keepwarm` keeps it warm |
 
 ## Install

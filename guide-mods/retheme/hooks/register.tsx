@@ -96,7 +96,8 @@ export const register: Register = on => {
 
     await update($, skin, () => name as ThemeName)
 
-    return { text: `Skin set to ${name}.` }
+    // Only the terminal draws a hook's tree for tool rows; the Claude apps draw their own.
+    return { text: `Skin set to ${name}. It shows in a terminal session; the Claude app draws tool rows itself.` }
   })
 
   on('tool.call', async ($, e, next) => {
