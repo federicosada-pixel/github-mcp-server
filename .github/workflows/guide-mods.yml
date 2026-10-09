@@ -1,0 +1,38 @@
+name: Guide Mods
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'guide-mods/**', '.github/workflows/guide-mods.yml' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'guide-mods/**', '.github/workflows/guide-mods.yml' ]
+
+permissions:
+  contents: read
+
+jobs:
+  mods:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    - name: Install Claude Code
+      run: npm install -g @anthropic-ai/claude-code
+
+    - name: Validate and test every mod
+      working-directory: guide-mods
+      run: |
+        status=0
+        for mod in file-tracker reflect replay-theater blast-radius savvy-progress retheme cache-tax; do
+          echo "== $mod"
+          claude plugin validate "$mod" || status=1
+          claude plugin test "$mod" || status=1
+        done
+        exit $status
