@@ -28,6 +28,8 @@ claude plugin install cache-tax@guide-mods
 
 Pick the user scope so each loads in every session. Mods run with your permissions; read the source before installing.
 
+Sessions opened on this repository, including Claude Code on the web, need none of that: `.claude/settings.json` declares the `guide-mods` marketplace and enables all seven, so they load on their own.
+
 ## Caveats
 
 - Cost figures (`savvy-progress`, `cache-tax`) are estimates from a built-in price table, not your bill.
