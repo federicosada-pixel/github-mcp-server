@@ -24,3 +24,7 @@ Full reference (structure, CI, workflows): `.github/copilot-instructions.md`. Re
 - Write the minimum code the request needs: no speculative features or abstractions.
 - Keep diffs surgical: leave unrelated code alone, remove only the orphans your change created.
 - Define a verifiable success check and loop until it passes.
+
+## Repo skills
+
+- When `go build`, `go vet`, or `script/lint` fails, use the `add-or-fix-type-checking` skill (`.claude/skills/add-or-fix-type-checking/SKILL.md`).
