@@ -91,6 +91,8 @@ Alternatively, to manually configure VS Code, choose the appropriate JSON block 
 - **[Zed](/docs/installation-guides/install-zed.md)** - Installation guide for Zed editor
 - **[Rovo Dev CLI](/docs/installation-guides/install-rovo-dev-cli.md)** - Installation guide for Rovo Dev CLI
 
+For all other documentation, see the **[documentation index](docs/README.md)**.
+
 > **Note:** Each MCP host application needs to configure a GitHub App or OAuth App to support remote access via OAuth. Any host application that supports remote MCP servers should support the remote GitHub server with PAT authentication. Configuration details and support levels vary by host. Make sure to refer to the host application's documentation for more info.
 
 ### Configuration
