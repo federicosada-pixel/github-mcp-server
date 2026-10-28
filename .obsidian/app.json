@@ -1,0 +1,11 @@
+{
+  "useMarkdownLinks": true,
+  "newLinkFormat": "relative",
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": false,
+  "userIgnoreFilters": [
+    "third-party/",
+    "ui/node_modules/",
+    "pkg/github/__toolsnaps__/"
+  ]
+}

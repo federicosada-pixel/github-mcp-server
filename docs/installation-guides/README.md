@@ -13,6 +13,7 @@ This directory contains detailed installation instructions for the GitHub MCP Se
 - **[OpenAI Codex](install-codex.md)** - Installation guide for OpenAI Codex
 - **[OpenCode](install-opencode.md)** - Installation guide for the OpenCode terminal agent
 - **[Roo Code](install-roo-code.md)** - Installation guide for Roo Code
+- **[Rovo Dev CLI](install-rovo-dev-cli.md)** - Installation guide for Rovo Dev CLI
 - **[Windsurf](install-windsurf.md)** - Installation guide for Windsurf IDE
 - **[Xcode (Codex & Claude Agent)](install-xcode.md)** - Installation guide for Codex and Claude Agent within Xcode
 - **[Zed](install-zed.md)** - Installation guide for Zed editor
