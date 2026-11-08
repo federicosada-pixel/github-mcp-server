@@ -1,19 +1,13 @@
 {
-  "enabledPlugins": {
-    "file-tracker@guide-mods": true,
-    "reflect@guide-mods": true,
-    "replay-theater@guide-mods": true,
-    "blast-radius@guide-mods": true,
-    "savvy-progress@guide-mods": true,
-    "retheme@guide-mods": true,
-    "cache-tax@guide-mods": true
-  },
-  "extraKnownMarketplaces": {
-    "guide-mods": {
-      "source": {
-        "source": "directory",
-        "path": "./guide-mods"
-      }
-    }
+  "permissions": {
+    "allow": [
+      "Bash(script/lint)",
+      "Bash(script/test)",
+      "Bash(script/generate-docs)",
+      "Bash(go build *)",
+      "Bash(go test *)",
+      "Bash(go vet *)",
+      "Bash(gofmt *)"
+    ]
   }
 }
